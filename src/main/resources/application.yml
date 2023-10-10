@@ -1,0 +1,28 @@
+#DB
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3306/CRUD
+    username: root
+    password: 1234
+#JPA
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        default_batch_fetch_size: 100
+    open-in-view: true
+#Spring Boot
+  banner:
+    location: banner.txt
+#JWT
+jwt:
+  header: Authorization
+  secret: V29vc3VrVW5pdmVyc2l0eS1Cb2JvbmdrdS1TZWNyZXQtS2V5LVJlLVdvb3N1a1VuaXZlcnNpdHktQm9ib25na3UtU2VjcmV0LUtleS1SZS0=
+  token-validity-inseconds: 86400
+#Swagger
+springdoc:
+  api-docs:
+    enabled: true
+
