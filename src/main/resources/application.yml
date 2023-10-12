@@ -26,4 +26,6 @@ jwt:
 springdoc:
   api-docs:
     enabled: true
-
+#FilePath
+file:
+  dir: D:\files\
