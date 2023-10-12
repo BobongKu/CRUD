@@ -49,7 +49,7 @@ public class Post extends BaseTimeEntity {
     private List<Comment> commentList = new ArrayList<>();
 
     /*연관관계 설정*/
-    public void confirmWriter(Member member) {
+    public void confirmWriter(Member writer) {
         this.writer = writer;
         writer.addPost(this);
     }
