@@ -15,6 +15,7 @@ import bobong.crud.global.file.exception.FileExceptionType;
 import bobong.crud.global.file.service.FileService;
 import bobong.crud.global.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,7 +33,7 @@ public class PostServiceImpl implements PostService{
     private final FileService fileService;
 
     @Override
-    public void save(PostSaveDto postSaveDto) throws Exception {
+    public void save(PostSaveDto postSaveDto){
         Post post = postSaveDto.toEntity();
 
         //SecurityContextHolder에서 유저 정보 가져와 writer 이름 지정
@@ -93,7 +94,7 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public PostInfoDto getPostInfo(Long id) {
-        return null;
+        return new PostInfoDto(postRepository.findById(id).orElseThrow(() -> new PostException(PostExceptionType.POST_NOT_POUND)));
     }
 
     @Override
