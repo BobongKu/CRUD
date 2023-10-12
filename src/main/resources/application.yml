@@ -8,11 +8,12 @@ spring:
 #JPA
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     properties:
       hibernate:
         default_batch_fetch_size: 100
     open-in-view: true
+    show-sql: true
 #Spring Boot
   banner:
     location: banner.txt
