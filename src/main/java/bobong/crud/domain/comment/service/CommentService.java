@@ -1,16 +1,17 @@
 package bobong.crud.domain.comment.service;
 
+import bobong.crud.domain.comment.dto.CommentSaveDto;
+import bobong.crud.domain.comment.dto.CommentUpdateDto;
 import bobong.crud.domain.comment.entity.Comment;
 
 import java.util.List;
 
 public interface CommentService {
 
-    void save(Comment comment);
+    void save(Long postId, CommentSaveDto commentSaveDto);
+    void saveReComment(Long postId, Long parentId, CommentSaveDto commentSaveDto);
 
-    Comment findById(Long id) throws Exception;
+    void update(Long id, CommentUpdateDto commentUpdateDto);
 
-    List<Comment> findAll();
-
-    void remove(Long id) throws Exception;
+    void remove(Long id);
 }
