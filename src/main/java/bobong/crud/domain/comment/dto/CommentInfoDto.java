@@ -23,10 +23,6 @@ public class CommentInfoDto {
 
     private List<ReCommentInfoDto> reCommentListDtoList;//대댓글에 대한 정보들
 
-
-
-
-
     /**
      * 삭제되었을 경우 삭제된 댓글입니다 출력
      */
@@ -44,8 +40,6 @@ public class CommentInfoDto {
         }
 
         this.isRemoved = comment.isRemoved();
-
-
 
         this.writerDto = new MemberInfoDto(comment.getWriter());
 

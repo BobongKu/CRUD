@@ -16,6 +16,8 @@ public class PostController {
 
     private final PostService postService;
 
+
+    //FileUpload 때문에 json이 아닌 form 형태 구현
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/post")
     public void save(@Valid @ModelAttribute PostSaveDto postSaveDto) {
