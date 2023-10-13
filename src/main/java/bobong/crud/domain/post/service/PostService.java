@@ -5,9 +5,7 @@ import bobong.crud.domain.post.dto.PostInfoDto;
 import bobong.crud.domain.post.dto.PostPagingDto;
 import bobong.crud.domain.post.dto.PostSaveDto;
 import bobong.crud.domain.post.dto.PostUpdateDto;
-import bobong.crud.global.file.exception.FileException;
-
-import java.awt.print.Pageable;
+import org.springframework.data.domain.Pageable;
 
 public interface PostService {
 

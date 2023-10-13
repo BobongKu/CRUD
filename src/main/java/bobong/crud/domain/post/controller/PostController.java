@@ -6,6 +6,7 @@ import bobong.crud.domain.post.dto.PostUpdateDto;
 import bobong.crud.domain.post.service.PostService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +29,6 @@ public class PostController {
     @PutMapping("/post/{postId}")
     public void update(@PathVariable("postId") Long postId,
                        @ModelAttribute PostUpdateDto postUpdateDto){
-
         postService.update(postId, postUpdateDto);
     }
 
@@ -42,4 +42,12 @@ public class PostController {
     public ResponseEntity getInfo(@PathVariable("postId") Long postId){
         return ResponseEntity.ok(postService.getPostInfo(postId));
     }
+
+    @GetMapping("/post")
+    public ResponseEntity search(Pageable pageable,
+                                 @ModelAttribute PostSearchCondition postSearchCondition){
+
+        return ResponseEntity.ok(postService.getPostList(pageable,postSearchCondition));
+    }
+
 }

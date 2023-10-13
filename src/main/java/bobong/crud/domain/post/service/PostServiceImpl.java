@@ -15,12 +15,10 @@ import bobong.crud.global.file.exception.FileExceptionType;
 import bobong.crud.global.file.service.FileService;
 import bobong.crud.global.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.awt.print.Pageable;
 
 
 @Service
@@ -99,7 +97,8 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public PostPagingDto getPostList(Pageable pageable, PostSearchCondition postSearchCondition) {
-        return null;
+
+        return new PostPagingDto(postRepository.search(postSearchCondition, pageable));
     }
 
     private void checkAuthority(Post post, PostExceptionType postExceptionType) {
