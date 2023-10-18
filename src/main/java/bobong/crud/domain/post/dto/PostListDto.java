@@ -11,17 +11,17 @@ import java.util.stream.Collectors;
 
 @Getter
 @NoArgsConstructor
-public class PostPagingDto {
+public class PostListDto {
 
-    private List<PostInfoDto> postInfoDtoList = new ArrayList<>();
+    private List<PostDto> postInfoDtoList = new ArrayList<>();
 
     private Long totalPages;
 
     private Long totalCount;
 
     @Builder
-    public PostPagingDto(List<Post> postList, Long totalPages, Long totalCount) {
-        this.postInfoDtoList = postList.stream().map(PostInfoDto::new).collect(Collectors.toList());
+    public PostListDto(List<Post> postList, Long totalPages, Long totalCount) {
+        this.postInfoDtoList = postList.stream().map(PostDto::new).collect(Collectors.toList());
         this.totalPages = totalPages;
         this.totalCount = totalCount;
     }
