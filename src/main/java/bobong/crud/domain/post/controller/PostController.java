@@ -1,6 +1,7 @@
 package bobong.crud.domain.post.controller;
 
-import bobong.crud.domain.post.dto.PostPagingDto;
+import bobong.crud.domain.post.cond.PostSearchCondition;
+import bobong.crud.domain.post.dto.PostListDto;
 import bobong.crud.domain.post.dto.PostSaveDto;
 import bobong.crud.domain.post.dto.PostUpdateDto;
 import bobong.crud.domain.post.service.PostService;
@@ -44,8 +45,8 @@ public class PostController {
     }
 
     @GetMapping("/post")
-    public ResponseEntity<PostPagingDto> getPostList(Pageable pageable) {
-        return postService.getPostList(pageable);
+    public ResponseEntity<PostListDto> getPostList(Pageable pageable, PostSearchCondition condition){
+        return postService.getPostList(pageable, condition);
     }
 
 }

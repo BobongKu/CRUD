@@ -1,8 +1,9 @@
 package bobong.crud.domain.post.service;
 
 import bobong.crud.domain.member.repository.MemberRepository;
+import bobong.crud.domain.post.cond.PostSearchCondition;
 import bobong.crud.domain.post.dto.PostInfoDto;
-import bobong.crud.domain.post.dto.PostPagingDto;
+import bobong.crud.domain.post.dto.PostListDto;
 import bobong.crud.domain.post.dto.PostSaveDto;
 import bobong.crud.domain.post.dto.PostUpdateDto;
 import bobong.crud.domain.post.entity.Post;
@@ -100,11 +101,11 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public ResponseEntity<PostPagingDto> getPostList(Pageable pageable) {
+    public ResponseEntity<PostListDto> getPostList(Pageable pageable, PostSearchCondition condition) {
 
-        Page<Post> results = postQueryRepository.getPostList(pageable);
+        Page<Post> results = postQueryRepository.getPostList(pageable, condition);
 
-        return new ResponseEntity<>(PostPagingDto.builder()
+        return new ResponseEntity<>(PostListDto.builder()
                 .postList(results.getContent())
                 .totalCount(results.getTotalElements())
                 .totalPages((long)results.getTotalPages())
