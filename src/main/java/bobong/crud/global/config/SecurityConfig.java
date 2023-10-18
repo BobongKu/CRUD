@@ -33,7 +33,7 @@ public class SecurityConfig{
         //api 특성상 formLogin 비활성화
         http.formLogin(AbstractHttpConfigurer::disable);
         //JWT토큰 사용으로 session 비활성화
-        http.sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         //로그인, 회원가입, docs를 제외한 모든 사이트는 인증받아야만 request 가능
         http.authorizeHttpRequests(request -> request
                 .requestMatchers(HttpMethod.POST, "/auth/signUp").permitAll()
@@ -52,12 +52,10 @@ public class SecurityConfig{
     //swagger-ui 사용을 위한 ignoring 설정
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return web -> {
-            web.ignoring().requestMatchers(
-                    "/swagger-ui/**"
-                    ,"/swagger-resources/**"
-                    ,"/v3/api-docs/**");
-        };
+        return web ->   web.ignoring().requestMatchers(
+                "/swagger-ui/**",
+                "/swagger-resources/**",
+                "/v3/api-docs/**");
     }
 
     //PasswordEncoder

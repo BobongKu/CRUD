@@ -2,7 +2,6 @@ package bobong.crud.domain.post.repository;
 
 import bobong.crud.domain.post.cond.PostSearchCondition;
 import bobong.crud.domain.post.entity.Post;
-import bobong.crud.domain.post.service.PostService;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -30,32 +29,39 @@ public class PostQueryRepository {
     }
 
     public Page<Post> getPostList(Pageable pageable, PostSearchCondition condition) {
-        QueryResults<Post> results = query
-                .selectFrom(post)
-                .where(titleHasStr(condition.getKeyword())
-                        .or(contentHasStr(condition.getKeyword()))
-                        .or(writerHasStr(condition.getKeyword())))
-                .leftJoin(post.writer, member).fetchJoin()
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .orderBy(post.createdDate.desc())
-                .fetchResults();
 
-        List<Post> content = results.getResults();
-        Long total = results.getTotal();
+        //조건
+        if (condition.getKeyword()!=null) {
+            QueryResults<Post> results = query
+                    .selectFrom(post)
+                    .where(post.content.contains(condition.getKeyword())
+                            .or(post.title.contains(condition.getKeyword()))
+                            .or(post.writer.nickname.contains(condition.getKeyword())))
+                    .leftJoin(post.writer, member).fetchJoin()
+                    .offset(pageable.getOffset())
+                    .limit(pageable.getPageSize())
+                    .orderBy(post.createdDate.desc())
+                    .fetchResults();
 
-        return new PageImpl<>(content, pageable, total);
-    }
+            List<Post> content = results.getResults();
+            Long total = results.getTotal();
 
-    private BooleanExpression contentHasStr(String keyword) {
-        return StringUtils.hasLength(keyword) ? post.content.contains(keyword) : post.content.contains("");
-    }
+            return new PageImpl<>(content, pageable, total);
+        }
+        //전체
+        else {
+            QueryResults<Post> results = query
+                    .selectFrom(post)
+                    .leftJoin(post.writer, member).fetchJoin()
+                    .offset(pageable.getOffset())
+                    .limit(pageable.getPageSize())
+                    .orderBy(post.createdDate.desc())
+                    .fetchResults();
 
-    private BooleanExpression titleHasStr(String keyword) {
-        return StringUtils.hasLength(keyword) ? post.title.contains(keyword) : post.title.contains("");
-    }
+            List<Post> content = results.getResults();
+            Long total = results.getTotal();
 
-    private BooleanExpression writerHasStr(String keyword) {
-        return StringUtils.hasLength(keyword) ? post.writer.nickname.contains(keyword) : post.writer.nickname.contains("");
+            return new PageImpl<>(content, pageable, total);
+        }
     }
 }
