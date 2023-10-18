@@ -17,6 +17,11 @@ spring:
 #Spring Boot
   banner:
     location: banner.txt
+#Paging 설정
+  data:
+    web:
+      pageable:
+        one-indexed-parameters: true #인덱싱이 1부터 시작하는 설정 파일
 #JWT
 jwt:
   header: Authorization
