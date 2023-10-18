@@ -1,7 +1,6 @@
 package bobong.crud.domain.post.service;
 
 import bobong.crud.domain.member.repository.MemberRepository;
-import bobong.crud.domain.post.cond.PostSearchCondition;
 import bobong.crud.domain.post.dto.PostInfoDto;
 import bobong.crud.domain.post.dto.PostPagingDto;
 import bobong.crud.domain.post.dto.PostSaveDto;
@@ -9,13 +8,17 @@ import bobong.crud.domain.post.dto.PostUpdateDto;
 import bobong.crud.domain.post.entity.Post;
 import bobong.crud.domain.post.exception.PostException;
 import bobong.crud.domain.post.exception.PostExceptionType;
+import bobong.crud.domain.post.repository.PostQueryRepository;
 import bobong.crud.domain.post.repository.PostRepository;
 import bobong.crud.global.file.exception.FileException;
 import bobong.crud.global.file.exception.FileExceptionType;
 import bobong.crud.global.file.service.FileService;
 import bobong.crud.global.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +32,7 @@ public class PostServiceImpl implements PostService{
     private final PostRepository postRepository;
     private final MemberRepository memberRepository;
     private final FileService fileService;
+    private final PostQueryRepository postQueryRepository;
 
     @Override
     public void save(PostSaveDto postSaveDto){
@@ -96,9 +100,15 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public PostPagingDto getPostList(Pageable pageable, PostSearchCondition postSearchCondition) {
+    public ResponseEntity<PostPagingDto> getPostList(Pageable pageable) {
 
-        return new PostPagingDto(postRepository.search(postSearchCondition, pageable));
+        Page<Post> results = postQueryRepository.getPostList(pageable);
+
+        return new ResponseEntity<>(PostPagingDto.builder()
+                .postList(results.getContent())
+                .totalCount(results.getTotalElements())
+                .totalPages((long)results.getTotalPages())
+                .build(), HttpStatus.OK);
     }
 
     private void checkAuthority(Post post, PostExceptionType postExceptionType) {
