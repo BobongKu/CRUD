@@ -47,7 +47,6 @@ public class Member extends BaseTimeEntity {
         this.role= Role.USER;
     }
 
-
     /* 회원탈퇴시 작성한 게시물, 댓글 모두 삭제 */
     @Builder.Default
     @OneToMany(mappedBy = "writer", cascade = ALL, orphanRemoval = true)
