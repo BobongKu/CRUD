@@ -42,4 +42,5 @@ public class GlobalExceptionHandler {
         CommentErrorResponse response = new CommentErrorResponse(e.getErrorCode());
         return ResponseEntity.ok().body(response);
     }
+
 }
