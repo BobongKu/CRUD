@@ -6,8 +6,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
@@ -15,14 +14,13 @@ import org.springframework.web.filter.GenericFilterBean;
 
 import java.io.IOException;
 
-
+@Slf4j
 public class JwtFilter extends GenericFilterBean {
 
-    private static final Logger logger = LoggerFactory.getLogger(JwtFilter.class);
 
     public static final String AUTHORIZATION_HEADER = "Authorization";
 
-    private JwtTokenProvider jwtTokenProvider;
+    private final JwtTokenProvider jwtTokenProvider;
 
     public JwtFilter(JwtTokenProvider jwtTokenProvider){
         this.jwtTokenProvider = jwtTokenProvider;
@@ -37,11 +35,10 @@ public class JwtFilter extends GenericFilterBean {
         if (StringUtils.hasText(jwt) && jwtTokenProvider.validationDataToken(jwt)) { // 유효성 검사
             Authentication authentication = jwtTokenProvider.getAuthentication(jwt);
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            logger.debug("Security Context에 '{}' 인증 정보를 저장했습니다, uri: {}", authentication.getName(), requestURI);
+            log.debug("Security Context에 '{}' 인증 정보를 저장했습니다, uri: {}", authentication.getName(), requestURI);
         } else {
-            logger.debug("유효한 JWT 토큰이 없습니다, uri: {}", requestURI);
+            log.debug("유효한 JWT 토큰이 없습니다, uri: {}", requestURI);
         }
-
         chain.doFilter(request, response);
     }
 
