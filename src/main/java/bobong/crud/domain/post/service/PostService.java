@@ -8,8 +8,6 @@ import bobong.crud.domain.post.dto.PostUpdateDto;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
-import java.util.Optional;
-
 public interface PostService {
 
     void save(PostSaveDto postSaveDto);

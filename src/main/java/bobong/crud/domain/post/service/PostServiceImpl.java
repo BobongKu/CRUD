@@ -1,7 +1,6 @@
 package bobong.crud.domain.post.service;
 
 import bobong.crud.domain.member.repository.MemberRepository;
-import bobong.crud.domain.post.PostType;
 import bobong.crud.domain.post.cond.PostSearchCondition;
 import bobong.crud.domain.post.dto.PostInfoDto;
 import bobong.crud.domain.post.dto.PostListDto;
@@ -25,8 +24,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 import static bobong.crud.domain.post.PostType.HIDDEN;
 
@@ -89,9 +86,7 @@ public class PostServiceImpl implements PostService{
             post.removePassword();
         } else {
             post.setPostTyeHIDDEN();
-            postUpdateDto.password().ifPresent(password -> {
-                post.updatePassword(password, passwordEncoder);
-            });
+            postUpdateDto.password().ifPresent(password -> post.updatePassword(password, passwordEncoder));
         }
 
         //수정 후 기존 파일이 없어졌을 시 삭제
