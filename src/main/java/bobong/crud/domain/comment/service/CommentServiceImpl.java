@@ -12,11 +12,13 @@ import bobong.crud.domain.post.exception.PostException;
 import bobong.crud.domain.post.repository.PostRepository;
 import bobong.crud.global.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor

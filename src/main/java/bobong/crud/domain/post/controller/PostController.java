@@ -12,10 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/post")
 public class PostController {
 
     private final PostService postService;
@@ -23,30 +22,30 @@ public class PostController {
 
     //FileUpload 때문에 json이 아닌 form 형태 구현
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/post")
+    @PostMapping
     public void save(@Valid @ModelAttribute PostSaveDto postSaveDto) {
         postService.save(postSaveDto);
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping("/post/{postId}")
-    public void update(@PathVariable("postId") Long postId,
+    @PutMapping("/{postId}")
+    public void update(@PathVariable Long postId,
                        @ModelAttribute PostUpdateDto postUpdateDto){
         postService.update(postId, postUpdateDto);
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping("/post/{postId}")
-    public void delete(@PathVariable("postId") Long postId){
+    @DeleteMapping("/{postId}")
+    public void delete(@PathVariable Long postId){
         postService.delete(postId);
     }
 
-    @GetMapping("/post/{postId}")
-    public ResponseEntity getInfo(@PathVariable("postId") Long postId, String password){
+    @GetMapping("/{postId}")
+    public ResponseEntity getInfo(@PathVariable Long postId, String password){
         return ResponseEntity.ok(postService.getPostInfo(postId, password));
     }
 
-    @GetMapping("/post")
+    @GetMapping
     public ResponseEntity<PostListDto> getPostList(Pageable pageable, PostSearchCondition condition){
         return postService.getPostList(pageable, condition);
     }

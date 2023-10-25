@@ -9,6 +9,7 @@ import java.util.List;
 public interface CommentService {
 
     void save(Long postId, CommentSaveDto commentSaveDto);
+
     void saveReComment(Long postId, Long parentId, CommentSaveDto commentSaveDto);
 
     void update(Long id, CommentUpdateDto commentUpdateDto);
