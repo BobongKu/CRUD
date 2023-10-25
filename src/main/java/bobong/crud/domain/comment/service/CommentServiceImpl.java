@@ -67,6 +67,6 @@ public class CommentServiceImpl implements CommentService{
         Comment comment = commentRepository.findById(id).orElseThrow(() -> new CommentException(CommentErrorCode.NOT_POUND_COMMENT));
         comment.remove(); //쿼리 수정
         List<Comment> removableCommentList = comment.findRemovableList();
-        removableCommentList.forEach(removableComment -> commentRepository.delete(removableComment)); //실제 삭제
+        removableCommentList.forEach(commentRepository::delete); //실제 삭제
     }
 }

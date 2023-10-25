@@ -5,8 +5,8 @@ import lombok.Getter;
 @Getter
 public class CommentException extends RuntimeException{
 
-    private CommentErrorCode errorCode;
-    private String message;
+    private final CommentErrorCode errorCode;
+    private final String message;
 
     public CommentException(CommentErrorCode errorCode) {
         this.errorCode = errorCode;

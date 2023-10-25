@@ -5,8 +5,8 @@ import lombok.Getter;
 @Getter
 public class PostException extends RuntimeException{
 
-    private PostErrorCode errorCode;
-    private String message;
+    private final PostErrorCode errorCode;
+    private final String message;
 
     public PostException(PostErrorCode errorCode) {
         this.errorCode = errorCode;

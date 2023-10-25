@@ -11,6 +11,6 @@ public enum CommentErrorCode {
     NOT_AUTHORITY_UPDATE_COMMENT(403, "댓글을 업데이트할 권한이 없습니다."),
     NOT_AUTHORITY_DELETE_COMMENT(503, "댓글을 삭제할 권한이 없습니다.");
 
-    private int status;
-    private String message;
+    private final int status;
+    private final String message;
 }

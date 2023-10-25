@@ -12,6 +12,6 @@ public enum PostErrorCode {
     NOT_AUTHORITY_POST(203, "글 열람 권한이 없습니다."),
     NOT_AUTHORITY_DELETE_POST(503, "글 삭제 권한이 없습니다.");
 
-    private int status;
-    private String message;
+    private final int status;
+    private final String message;
 }
