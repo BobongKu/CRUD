@@ -4,6 +4,8 @@ import bobong.crud.domain.member.dto.MemberInfoDto;
 import bobong.crud.domain.member.dto.MemberSingUpDto;
 import bobong.crud.domain.member.dto.MemberUpdateDto;
 import bobong.crud.domain.member.entity.Member;
+import bobong.crud.domain.member.exception.MemberErrorCode;
+import bobong.crud.domain.member.exception.MemberException;
 import bobong.crud.domain.member.repository.MemberRepository;
 import bobong.crud.global.util.SecurityUtil;
 import jakarta.transaction.Transactional;
@@ -34,7 +36,7 @@ public class MemberServiceImpl implements MemberService{
 
         //중복 조회
         if(memberRepository.findByUsername(memberSingUpDto.username()).isPresent()){
-            throw new Exception();
+            throw new MemberException(MemberErrorCode.DUPLICATE_MEMBER_USERNAME);
         }
 
         memberRepository.save(member);
@@ -43,14 +45,14 @@ public class MemberServiceImpl implements MemberService{
     //회원정보 조회
     @Override
     public MemberInfoDto getInfo(Long id) throws Exception {
-        Member findMember = memberRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("이잉"));
+        Member findMember = memberRepository.findById(id).orElseThrow(() -> new MemberException(MemberErrorCode.MEMBER_NOT_FOUND));
         return new MemberInfoDto(findMember);
     }
 
     //내정보 조회
     @Override
     public MemberInfoDto getMyInfo() throws Exception {
-        Member findMember = memberRepository.findByUsername(SecurityUtil.getLoginUsername()).orElseThrow(() -> new UsernameNotFoundException("이잉"));
+        Member findMember = memberRepository.findByUsername(SecurityUtil.getLoginUsername()).orElseThrow(() -> new MemberException(MemberErrorCode.MEMBER_NOT_FOUND));
         return new MemberInfoDto(findMember);
     }
 
@@ -58,7 +60,7 @@ public class MemberServiceImpl implements MemberService{
     //회원정보 수정
     @Override
     public void update(MemberUpdateDto memberUpdateDto) throws Exception {
-        Member member = memberRepository.findByUsername(SecurityUtil.getLoginUsername()).orElseThrow(() -> new UsernameNotFoundException("이잉"));
+        Member member = memberRepository.findByUsername(SecurityUtil.getLoginUsername()).orElseThrow(() -> new MemberException(MemberErrorCode.MEMBER_NOT_FOUND));
 
         memberUpdateDto.nickName().ifPresent(member::updateNickName);
     }

@@ -2,6 +2,8 @@ package bobong.crud.global.exception;
 
 import bobong.crud.domain.comment.exception.CommentErrorResponse;
 import bobong.crud.domain.comment.exception.CommentException;
+import bobong.crud.domain.member.exception.MemberErrorResponse;
+import bobong.crud.domain.member.exception.MemberException;
 import bobong.crud.domain.post.exception.PostErrorResponse;
 import bobong.crud.domain.post.exception.PostException;
 import bobong.crud.global.file.exception.FileErrorResponse;
@@ -12,6 +14,13 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    //member exception
+    @ExceptionHandler({MemberException.class})
+    protected ResponseEntity memberException(MemberException e) {
+        MemberErrorResponse response = new MemberErrorResponse(e.getErrorCode());
+        return ResponseEntity.ok().body(response);
+    }
 
     //post exception
     @ExceptionHandler({PostException.class})
