@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -36,8 +37,8 @@ public class SecurityConfig{
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         //로그인, 회원가입, docs를 제외한 모든 사이트는 인증받아야만 request 가능
         http.authorizeHttpRequests(request -> request
-                .requestMatchers(HttpMethod.POST, "/auth/signUp").permitAll()
-                .requestMatchers(HttpMethod.POST, "/login").permitAll()
+                .requestMatchers(HttpMethod.POST, "/auth/signUp","/login").permitAll()
+                .requestMatchers(HttpMethod.GET, "/post/{postId}","/post", "/member/{id}").permitAll()
                 .anyRequest().authenticated());//권한 수정 필요
         //에러 처리
         http.exceptionHandling(authenticationManager -> authenticationManager

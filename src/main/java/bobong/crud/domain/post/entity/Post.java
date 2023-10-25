@@ -3,11 +3,13 @@ package bobong.crud.domain.post.entity;
 import bobong.crud.domain.BaseTimeEntity;
 import bobong.crud.domain.comment.entity.Comment;
 import bobong.crud.domain.member.entity.Member;
+import bobong.crud.domain.post.PostType;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +39,29 @@ public class Post extends BaseTimeEntity {
     @Column(nullable = true)
     private String filePath;
 
+    //eunm상수 string으로 저장
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private PostType postType;
+
+    @Column(nullable = true)
+    private String password;
+
+    //Normal 타입으로 설정
+    public void setPostTypeNORMAL() {
+        this.postType = PostType.NORMAL;
+    }
+
+    //Hidden 타입으로 설정
+    public void setPostTyeHIDDEN() {
+        this.postType = PostType.HIDDEN;
+    }
+
+    //비밀번호 검증
+    public boolean matchPassword(PasswordEncoder passwordEncoder, String checkPassword){
+        return passwordEncoder.matches(checkPassword,getPassword());
+    }
+
     @Builder
     public Post(String title, String content, String filePath){
         this.title = title;
@@ -53,6 +78,7 @@ public class Post extends BaseTimeEntity {
         this.writer = writer;
         writer.addPost(this);
     }
+
     public void addComment(Comment comment) {
         commentList.add(comment);
     }
@@ -68,5 +94,13 @@ public class Post extends BaseTimeEntity {
 
     public void updateFilePath(String filePath) {
         this.filePath = filePath;
+    }
+
+    public void updatePassword(String password, PasswordEncoder passwordEncoder) {
+        this.password = passwordEncoder.encode(password);
+    }
+
+    public void removePassword() {
+        this.password = null;
     }
 }

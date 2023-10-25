@@ -1,7 +1,7 @@
 package bobong.crud.global.file.service;
 
+import bobong.crud.global.file.exception.FileErrorCode;
 import bobong.crud.global.file.exception.FileException;
-import bobong.crud.global.file.exception.FileExceptionType;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,7 +24,7 @@ public class FileServiceImpl implements FileService{
             multipartFile.transferTo(new File(filePath));
         } catch (IOException e){
             //파일 저장 에러
-            throw new FileException(FileExceptionType.FILE_CAN_NOT_SAVE);
+            throw new FileException(FileErrorCode.FILE_CAN_NOT_SAVE);
         }
 
         return filePath;
@@ -36,6 +36,6 @@ public class FileServiceImpl implements FileService{
 
         if(!file.exists()) return;
 
-        if(!file.delete()) throw new FileException(FileExceptionType.FILE_CAN_NOT_DELETE);
+        if(!file.delete()) throw new FileException(FileErrorCode.FILE_CAN_NOT_DELETE);
     }
 }

@@ -1,18 +1,15 @@
 package bobong.crud.global.file.exception;
 
-import bobong.crud.global.exception.BaseException;
-import bobong.crud.global.exception.BaseExceptionType;
+import lombok.Getter;
 
-public class FileException extends BaseException {
-    private BaseExceptionType exceptionType;
+@Getter
+public class FileException extends RuntimeException{
 
+    private FileErrorCode errorCode;
+    private String message;
 
-    public FileException(BaseExceptionType exceptionType) {
-        this.exceptionType = exceptionType;
-    }
-
-    @Override
-    public BaseExceptionType getExceptionType() {
-        return exceptionType;
+    public FileException(FileErrorCode errorCode) {
+        this.errorCode = errorCode;
+        this.message = errorCode.getMessage();
     }
 }

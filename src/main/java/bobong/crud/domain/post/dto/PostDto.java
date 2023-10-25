@@ -17,7 +17,6 @@ public class PostDto {
     private String content;//내용
     private String filePath;//업로드 파일 경로
     private MemberInfoDto writerDto;//작성자에 대한 정보
-    private List<CommentInfoDto> commentInfoDtoList;//댓글 정보들
 
     public PostDto(Post post) {
         this.postId = post.getId();

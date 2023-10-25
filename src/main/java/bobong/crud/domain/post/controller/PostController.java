@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequiredArgsConstructor
 public class PostController {
@@ -40,8 +42,8 @@ public class PostController {
     }
 
     @GetMapping("/post/{postId}")
-    public ResponseEntity getInfo(@PathVariable("postId") Long postId){
-        return ResponseEntity.ok(postService.getPostInfo(postId));
+    public ResponseEntity getInfo(@PathVariable("postId") Long postId, String password){
+        return ResponseEntity.ok(postService.getPostInfo(postId, password));
     }
 
     @GetMapping("/post")

@@ -1,19 +1,15 @@
 package bobong.crud.domain.comment.exception;
 
-import bobong.crud.global.exception.BaseException;
-import bobong.crud.global.exception.BaseExceptionType;
+import lombok.Getter;
 
-public class CommentException extends BaseException {
+@Getter
+public class CommentException extends RuntimeException{
 
-    private BaseExceptionType baseExceptionType;
+    private CommentErrorCode errorCode;
+    private String message;
 
-
-    public CommentException(BaseExceptionType baseExceptionType) {
-        this.baseExceptionType = baseExceptionType;
-    }
-
-    @Override
-    public BaseExceptionType getExceptionType() {
-        return this.baseExceptionType;
+    public CommentException(CommentErrorCode errorCode) {
+        this.errorCode = errorCode;
+        this.message = errorCode.getMessage();
     }
 }

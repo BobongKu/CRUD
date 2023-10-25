@@ -8,6 +8,8 @@ import bobong.crud.domain.post.dto.PostUpdateDto;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
+import java.util.Optional;
+
 public interface PostService {
 
     void save(PostSaveDto postSaveDto);
@@ -16,7 +18,7 @@ public interface PostService {
 
     void delete(Long id);
 
-    PostInfoDto getPostInfo(Long id);
+    PostInfoDto getPostInfo(Long id, String password);
 
     ResponseEntity<PostListDto> getPostList(Pageable pageable, PostSearchCondition condition);
 }

@@ -38,6 +38,10 @@ public class QPost extends EntityPathBase<Post> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> lastModifiedDate = _super.lastModifiedDate;
 
+    public final StringPath password = createString("password");
+
+    public final EnumPath<bobong.crud.domain.post.PostType> postType = createEnum("postType", bobong.crud.domain.post.PostType.class);
+
     public final StringPath title = createString("title");
 
     public final bobong.crud.domain.member.entity.QMember writer;

@@ -1,19 +1,15 @@
 package bobong.crud.domain.post.exception;
 
-import bobong.crud.global.exception.BaseException;
-import bobong.crud.global.exception.BaseExceptionType;
+import lombok.Getter;
 
-public class PostException extends BaseException {
+@Getter
+public class PostException extends RuntimeException{
 
+    private PostErrorCode errorCode;
+    private String message;
 
-    private BaseExceptionType baseExceptionType;
-
-    public PostException(BaseExceptionType baseExceptionType){
-        this.baseExceptionType = baseExceptionType;
-    }
-
-    @Override
-    public BaseExceptionType getExceptionType() {
-        return this.baseExceptionType;
+    public PostException(PostErrorCode errorCode) {
+        this.errorCode = errorCode;
+        this.message = errorCode.getMessage();
     }
 }
